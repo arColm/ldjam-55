@@ -127,11 +127,11 @@ public class PlayerFlute : MonoBehaviour
             Vector2 spawnPos = transform.position;
             if (Player.Inst.controller._isFacingRight)
             {
-                spawnPos = new Vector2(spawnPos.x + 2, spawnPos.y);
+                spawnPos = new Vector2(spawnPos.x + 2, spawnPos.y+1);
             }
             else
             {
-                spawnPos = new Vector2(spawnPos.x - 2, spawnPos.y);
+                spawnPos = new Vector2(spawnPos.x - 2, spawnPos.y+1);
             }
 
             Rat rat = Instantiate(_packRats, spawnPos, Quaternion.identity);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] int targetFramerate = 60;
+    [SerializeField] private int _targetFramerate = 140;
 
     public State state = State.Playing;
 
@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
-        Application.targetFrameRate = targetFramerate;
+        Application.targetFrameRate = _targetFramerate;
     }
 
     public enum State

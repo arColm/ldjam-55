@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
 
 
     private Controller2D _controller;
+    private Animator _animator;
 
     private bool _coyoteJump = true;
     private bool _isGrounded = false;
@@ -44,6 +45,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _controller = GetComponent<Controller2D>();
+        _animator = GetComponent<Animator>();
         _jumpVelocity = Mathf.Abs(_gravity) * _timeToJumpApex;
     }
 
@@ -270,7 +272,7 @@ public class PlayerController : MonoBehaviour
         if (_isFacingRight != right)
         {
             transform.localScale = new Vector3(
-                Mathf.Abs(transform.localScale.x) * (right ? 1 : -1),
+                Mathf.Abs(transform.localScale.x) * (right ? -1 : 1),
                 transform.localScale.y,
                 transform.localScale.z);
         }
@@ -283,9 +285,22 @@ public class PlayerController : MonoBehaviour
     private void UpdateState(State s)
     {
         state = s;
-        switch(s)
+        switch (s)
         {
-
+            case State.Idle:
+                _animator.Play("Player_idle");
+                break;
+            case State.Walking:
+                _animator.Play("Player_walking");
+                break;
+            case State.Jumping:
+                _animator.Play("Player_jumping");
+                break;
+            case State.Falling:
+                _animator.Play("Player_falling");
+                break;
+            case State.PlayingFlute:
+                break;
         }
     }
 

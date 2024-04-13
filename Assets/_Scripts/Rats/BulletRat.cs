@@ -11,17 +11,20 @@ public class BulletRat : Rat
 
     private bool _isStuck = false;
 
+    private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rigidBody;
     private Controller2D _controller;
     private void Awake()
     {
         _controller = GetComponent<Controller2D>();
         _rigidBody = GetComponent<Rigidbody2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public void Instantiate(bool isFacingRight)
     {
         _isFacingRight = isFacingRight;
+        _spriteRenderer.flipX = isFacingRight;
         if (_isFacingRight) _velocity = new Vector2(20, 0);
         else _velocity = new Vector2(-20, 0);
     }

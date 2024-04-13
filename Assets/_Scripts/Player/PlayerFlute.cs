@@ -2,22 +2,27 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.ParticleSystem;
 
 public class PlayerFlute : MonoBehaviour
 {
-
+    [Header("Particles")]
+    [SerializeField] private ParticleSystem _spawnRatParticles;
+    [SerializeField] private ParticleSystem _musicNoteParticles;
     //events
     public static event Action<int> UpdateRemainingRats;
 
     //Rats
 
 
+    
     [SerializeField] public int maxNumRats = 3;
     private int _numDroppedRats = 0;
 
     [Header("Rats")]
     [SerializeField] private Rat _packRats;
     [SerializeField] private BulletRat _bulletRat;
+
 
 
     private Rat[] _droppedRats;
@@ -57,21 +62,25 @@ public class PlayerFlute : MonoBehaviour
             {
                 AddNewNode('u');
                 _audioSource.PlayOneShot(_uSound);
+                CreateMusicNoteParticle('u', transform.position);
             }
             if (Input.GetKeyDown(KeyCode.I))
             {
                 AddNewNode('i');
                 _audioSource.PlayOneShot(_iSound);
+                CreateMusicNoteParticle('i', transform.position);
             }
             if (Input.GetKeyDown(KeyCode.O))
             {
                 AddNewNode('o');
                 _audioSource.PlayOneShot(_oSound);
+                CreateMusicNoteParticle('o', transform.position);
             }
             if (Input.GetKeyDown(KeyCode.P))
             {
                 AddNewNode('p');
                 _audioSource.PlayOneShot(_pSound);
+                CreateMusicNoteParticle('p', transform.position);
             }
             if (_timeSinceLastKey < _timeToResetKeys)
             {
@@ -85,6 +94,43 @@ public class PlayerFlute : MonoBehaviour
 
 
 
+    }
+
+    private void CreateMusicNoteParticle(char key, Vector2 position)
+    {
+        EmitParams emitParams = new EmitParams();
+        switch(key)
+        {
+            case 'u':
+                emitParams.startColor = Color.red;
+                break;
+            case 'i':
+                emitParams.startColor = Color.cyan;
+                break;
+            case 'o':
+                emitParams.startColor = Color.green;
+                break;
+            case 'p':
+                emitParams.startColor = Color.yellow;
+                break;
+        }
+        emitParams.position = position;
+        _musicNoteParticles.Emit(emitParams, 1);
+    }
+
+    private void CreateSpawnRatParticles(Vector2 position)
+    {
+        EmitParams emitParams = new EmitParams();
+        emitParams.position = position;
+        _spawnRatParticles.Emit(emitParams, 1);
+    }
+
+    private void CreateResetRatParticles(Vector2 position)
+    {
+        EmitParams emitParams = new EmitParams();
+        emitParams.position = position;
+        emitParams.startSize = 2;
+        _spawnRatParticles.Emit(emitParams, 1);
     }
     
     public void UpgradeRats()
@@ -135,6 +181,7 @@ public class PlayerFlute : MonoBehaviour
         if (_keyList[3] == 'u' && _keyList[2] == 'i' && _keyList[1] == 'o' && _keyList[0] == 'p')
         {
             ResetRats();
+            CreateResetRatParticles(transform.position);
             ResetKeyList();
         }
         if (_keyList[3] == 'u' && _keyList[2] == 'i' && _keyList[1] == 'u' && _keyList[0] == 'i')
@@ -162,7 +209,7 @@ public class PlayerFlute : MonoBehaviour
             {
                 spawnPos = new Vector2(spawnPos.x - 1, spawnPos.y);
             }
-
+            CreateSpawnRatParticles(spawnPos);
             BulletRat rat = Instantiate(_bulletRat, spawnPos, Quaternion.identity);
             rat.Instantiate(Player.Inst.controller._isFacingRight);
             _droppedRats[_numDroppedRats] = rat;
@@ -203,6 +250,7 @@ public class PlayerFlute : MonoBehaviour
                 spawnPos = new Vector2(spawnPos.x - 2, spawnPos.y+1);
             }
 
+            CreateSpawnRatParticles(spawnPos);
             Rat rat = Instantiate(_packRats, spawnPos, Quaternion.identity);
             _droppedRats[_numDroppedRats] = rat;
             _numDroppedRats++;

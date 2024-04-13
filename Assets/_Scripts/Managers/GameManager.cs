@@ -24,6 +24,24 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = _targetFramerate;
     }
 
+    public void UpdateState(State s)
+    {
+        state = s;
+    }
+    public void PauseGame(float time)
+    {
+        StartCoroutine(DoPauseGame(time));
+    }
+    IEnumerator DoPauseGame(float time)
+    {
+        State oldState = state;
+        UpdateState(State.Paused);
+        Time.timeScale = 0;
+        yield return new WaitForSecondsRealtime(time);
+        Time.timeScale = 1;
+        UpdateState(oldState);
+    }
+
     public enum State
     {
         Playing,

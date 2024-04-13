@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class UI : MonoBehaviour
 {
+    public static UI Inst;
 
-    public PlayerController controller;
-    public PlayerFlute flute;
-    public static Player Inst;
+    public RatsUI RatsUI;
     private void Awake()
     {
         if (Inst != null && Inst != this)

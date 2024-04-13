@@ -8,8 +8,15 @@ public class PressurePlate : MonoBehaviour
     [SerializeField] GameObject[] activatablesObjects;
     private IActivatable[] activatables;
 
+    private SpriteRenderer _spriteRenderer;
+
+    [SerializeField] private Sprite _activatedSprite;
+    [SerializeField] private Sprite _deactivatedSprite;
+
+
     private void Awake()
     {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         //activatables = GetComponentsInChildren<IActivatable>();
         activatables = new IActivatable[activatablesObjects.Length];
         for(int i=0;i<activatablesObjects.Length;i++)
@@ -26,6 +33,7 @@ public class PressurePlate : MonoBehaviour
             {
                 activatable.Activate();
             }
+            _spriteRenderer.sprite = _activatedSprite;
         }
     }
 
@@ -37,6 +45,7 @@ public class PressurePlate : MonoBehaviour
             {
                 activatable.Deactivate();
             }
+            _spriteRenderer.sprite = _deactivatedSprite;
         }
     }
 }

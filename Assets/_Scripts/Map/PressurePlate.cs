@@ -5,11 +5,17 @@ using UnityEngine;
 public class PressurePlate : MonoBehaviour
 {
 
-    IActivatable[] activatables;
+    [SerializeField] GameObject[] activatablesObjects;
+    private IActivatable[] activatables;
 
     private void Awake()
     {
-        activatables = GetComponentsInChildren<IActivatable>();
+        //activatables = GetComponentsInChildren<IActivatable>();
+        activatables = new IActivatable[activatablesObjects.Length];
+        for(int i=0;i<activatablesObjects.Length;i++)
+        {
+            activatables[i] = activatablesObjects[i].GetComponent<IActivatable>();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public Vector2 RespawnPoint;
 
     public PlayerController controller;
     public PlayerFlute flute;
@@ -19,5 +20,11 @@ public class Player : MonoBehaviour
             Inst = this;
         }
 
+    }
+
+    public void Die()
+    {
+        controller.transform.position = RespawnPoint;
+        flute.ResetRats();
     }
 }

@@ -22,8 +22,8 @@ public class BulletRat : Rat
     public void Instantiate(bool isFacingRight)
     {
         _isFacingRight = isFacingRight;
-        if (_isFacingRight) _velocity = new Vector2(10, 0);
-        else _velocity = new Vector2(-10, 0);
+        if (_isFacingRight) _velocity = new Vector2(20, 0);
+        else _velocity = new Vector2(-20, 0);
     }
 
     private void FixedUpdate()

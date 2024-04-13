@@ -7,13 +7,14 @@ public class PlayerFlute : MonoBehaviour
     //Rats
 
 
-    [SerializeField] public int maxNumRats { private set; get; }
+    [SerializeField] public int maxNumRats;
+    private int _numDroppedRats = 0;
 
     [Header("Rats")]
     [SerializeField] private Rat _packRats;
 
 
-    private List<Rat> _droppedRats;
+    private Rat[] _droppedRats;
 
     //Keys
     private char[] _keyList;
@@ -24,7 +25,7 @@ public class PlayerFlute : MonoBehaviour
     private void Awake()
     {
         _keyList = new char[4];
-        _droppedRats = new List<Rat>();
+        _droppedRats = new Rat[maxNumRats];
     }
 
     private void Update()
@@ -104,21 +105,40 @@ public class PlayerFlute : MonoBehaviour
     private void ResetRats()
     {
         print("RESET RATS");
+
+        for(int i=0;i<_numDroppedRats;i++)
+        {
+            Rat rat = _droppedRats[i];
+            if(rat!=null)
+            {
+                _droppedRats[i] = null;
+                rat.Reset();
+            }
+        }
+
+        _numDroppedRats = 0;
+
     }
 
     private void SpawnPackRats()
     {
-        Vector2 spawnPos = transform.position;
-        if(Player.Inst.controller._isFacingRight)
+        if(_numDroppedRats<maxNumRats)
         {
-            spawnPos = new Vector2(spawnPos.x + 2, spawnPos.y);
-        }
-        else
-        {
-            spawnPos = new Vector2(spawnPos.x - 2, spawnPos.y);
+            Vector2 spawnPos = transform.position;
+            if (Player.Inst.controller._isFacingRight)
+            {
+                spawnPos = new Vector2(spawnPos.x + 2, spawnPos.y);
+            }
+            else
+            {
+                spawnPos = new Vector2(spawnPos.x - 2, spawnPos.y);
+            }
+
+            Rat rat = Instantiate(_packRats, spawnPos, Quaternion.identity);
+            _droppedRats[_numDroppedRats] = rat;
+            _numDroppedRats++;
         }
 
-        Instantiate(_packRats, spawnPos,Quaternion.identity);
     }
 
 

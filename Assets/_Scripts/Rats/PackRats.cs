@@ -19,23 +19,24 @@ public class PackRats : Rat
         if (GameManager.Inst.state != GameManager.State.Paused)
         {
             //handle collisions
-            if (_controller.collisions.below && _velocity.y < 0)
+            if (_controller.collisions.below && _velocity.y>0)
             {
                 _velocity.y = 0;
             }
-
-            if (_controller.collisions.above && _velocity.y > 0)
+            else
             {
-                _velocity.y = 0;
+                //gravity
+                if (_velocity.y >= _terminalVelocity)
+                    _velocity.y += _gravity * Time.fixedDeltaTime;
+
+
+
+                _controller.Move(_velocity * Time.fixedDeltaTime);
             }
 
-            //gravity
-            if (_velocity.y >= _terminalVelocity)
-                _velocity.y += _gravity * Time.fixedDeltaTime;
 
 
 
-            _controller.Move(_velocity * Time.fixedDeltaTime);
         }
     }
 }

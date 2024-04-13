@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
 
     private bool _coyoteJump = true;
     private bool _isGrounded = false;
-    private bool _isFacingRight = true;
+    public bool _isFacingRight { private set; get; } = true;
     private bool _canCancelJump = false;
     [SerializeField] public State state { private set; get; }
 
@@ -51,6 +51,8 @@ public class PlayerController : MonoBehaviour
     {
         if(GameManager.Inst.state!=GameManager.State.Paused)
         {
+            /*          HANDLE INPUTS
+            * ============================================================== */
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 _jumpPressed = true;
@@ -62,7 +64,10 @@ public class PlayerController : MonoBehaviour
             }
 
 
-            if(_jumpPressedTimer>0)
+
+            /*          
+            * ============================================================== */
+            if (_jumpPressedTimer>0)
             {
                 _jumpPressedTimer -= Time.deltaTime;
                 if (_jumpPressedTimer <= 0) _jumpPressed = false;
@@ -216,11 +221,11 @@ public class PlayerController : MonoBehaviour
             if (targetVelocityX != 0)
             {
                 _velocity.x = Mathf.SmoothDamp(_velocity.x, targetVelocityX, ref _velocityXSmoothing, 
-                    Time.deltaTime * 60 * ((_controller.collisions.below) ? _accelerationTimeGrounded : _accelerationTimeAirborne));
+                    Time.fixedDeltaTime * 60 * ((_controller.collisions.below) ? _accelerationTimeGrounded : _accelerationTimeAirborne));
             }
             else
             {
-                _velocity.x = Mathf.MoveTowards(_velocity.x, targetVelocityX, Time.deltaTime * (_isGrounded ? _decelerationRateGrounded : _decelerationRateAirborne));
+                _velocity.x = Mathf.MoveTowards(_velocity.x, targetVelocityX, Time.fixedDeltaTime * (_isGrounded ? _decelerationRateGrounded : _decelerationRateAirborne));
 
             }
 

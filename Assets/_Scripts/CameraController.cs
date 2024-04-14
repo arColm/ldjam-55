@@ -29,7 +29,7 @@ public class CameraController : MonoBehaviour
 
     public void SetCurrentCamera(CinemachineVirtualCamera camera)
     {
-        GameManager.Inst.PauseGame(1);
+        //GameManager.Inst.PauseGame(1);
         currentCamera.Priority = 0;
         currentCamera = camera;
         currentCamera.Priority = 10;

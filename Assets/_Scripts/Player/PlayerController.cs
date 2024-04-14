@@ -29,10 +29,12 @@ public class PlayerController : MonoBehaviour
     private int _remainingJumps = 1;
     private float _jumpPressedTimer = 0f;
 
+    private bool _inAntiGravity = false;
 
 
     private Controller2D _controller;
     private Animator _animator;
+    private SpriteRenderer _spriteRenderer;
 
     private bool _coyoteJump = true;
     private bool _isGrounded = false;
@@ -46,6 +48,7 @@ public class PlayerController : MonoBehaviour
     {
         _controller = GetComponent<Controller2D>();
         _animator = GetComponent<Animator>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         _jumpVelocity = Mathf.Abs(_gravity) * _timeToJumpApex;
     }
 
@@ -113,8 +116,10 @@ public class PlayerController : MonoBehaviour
             {
                 _remainingJumps = 1;
             }
+            Vector2 input;
+            if (_inAntiGravity) input = new Vector2(-Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            else input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-            Vector2 input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
             float targetVelocityX = 0;
             switch (state)
             {
@@ -231,10 +236,18 @@ public class PlayerController : MonoBehaviour
 
             }
 
-            //gravity
-            if (_velocity.y >= _terminalVelocity)
-                _velocity.y += _gravity * Time.fixedDeltaTime;
-
+/*            if (_inAntiGravity)
+            {
+                //gravity
+                if (_velocity.y <= -_terminalVelocity)
+                    _velocity.y += -_gravity * Time.fixedDeltaTime;
+            }
+            else*/
+            
+                //gravity
+                if (_velocity.y >= _terminalVelocity)
+                    _velocity.y += _gravity * Time.fixedDeltaTime;
+            
 
 
             _controller.Move(_velocity * Time.fixedDeltaTime);
@@ -243,11 +256,37 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void SetInAntiGravity(bool inAntiGravity)
+    {
+        if(_inAntiGravity!=inAntiGravity)
+        {
+            _velocity = new Vector2(-_velocity.x, -_velocity.y/2);
+        }
+        _inAntiGravity = inAntiGravity;
+        if(inAntiGravity)
+        {
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, 180));
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+        }
+    }
     private void Jump()
     {
 
-        if (_velocity.y < 0) _velocity.y = 0;
-        _velocity.y += _jumpVelocity;
+/*        if(_inAntiGravity)
+        {
+            if (_velocity.y > 0) _velocity.y = 0;
+            _velocity.y -= _jumpVelocity;
+        }
+        else
+        {*/
+            if (_velocity.y < 0) _velocity.y = 0;
+            _velocity.y += _jumpVelocity;
+
+        
+
         //CreateJumpParticles();
         //AudioManager.inst.PlayPlayerJumpSound();
         StartCoroutine(StartJumpCancelTimer());

@@ -22,6 +22,7 @@ public class PlayerFlute : MonoBehaviour
     [Header("Rats")]
     [SerializeField] private Rat _packRats;
     [SerializeField] private BulletRat _bulletRat;
+    [SerializeField] private Rat _antiGravityRat;
 
 
 
@@ -182,17 +183,26 @@ public class PlayerFlute : MonoBehaviour
         {
             ResetRats();
             CreateResetRatParticles(transform.position);
+            UI.Inst.EnableResetRatScroll();
             ResetKeyList();
         }
         if (_keyList[3] == 'u' && _keyList[2] == 'i' && _keyList[1] == 'u' && _keyList[0] == 'i')
         {
             SpawnPackRats();
+            UI.Inst.EnablePackRatScroll();
 
             ResetKeyList();
         }
         if (_keyList[3] == 'o' && _keyList[2] == 'i' && _keyList[1] == 'u' && _keyList[0] == 'i')
         {
             SpawnBulletRat();
+            UI.Inst.EnableBulletRatScroll();
+            ResetKeyList();
+        }
+        if (_keyList[3] == 'p' && _keyList[2] == 'o' && _keyList[1] == 'i' && _keyList[0] == 'u')
+        {
+            SpawnAntiGravityRat();
+            UI.Inst.EnableAntiGravityRatScroll();
             ResetKeyList();
         }
     }
@@ -257,6 +267,20 @@ public class PlayerFlute : MonoBehaviour
             UpdateRemainingRats?.Invoke(maxNumRats - _numDroppedRats);
         }
 
+    }
+
+    private void SpawnAntiGravityRat()
+    {
+        if (_numDroppedRats < maxNumRats)
+        {
+            Vector2 spawnPos = transform.position;
+
+            CreateSpawnRatParticles(spawnPos);
+            Rat rat = Instantiate(_antiGravityRat, spawnPos, Quaternion.identity);
+            _droppedRats[_numDroppedRats] = rat;
+            _numDroppedRats++;
+            UpdateRemainingRats?.Invoke(maxNumRats - _numDroppedRats);
+        }
     }
 
 

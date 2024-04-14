@@ -9,6 +9,10 @@ public class Player : MonoBehaviour
     public PlayerController controller;
     public PlayerFlute flute;
     public static Player Inst;
+
+    public bool PackRatsFound = false;
+    public bool ResetRatsFound = false;
+    public bool BulletRatsFound = false;
     private void Awake()
     {
         if (Inst != null && Inst != this)

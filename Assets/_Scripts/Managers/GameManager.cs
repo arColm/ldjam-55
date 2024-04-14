@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public State state = State.Playing;
 
     public static GameManager Inst;
+    private State _oldState = State.Playing;
     private void Awake()
     {
         if (Inst != null && Inst != this)
@@ -28,18 +29,35 @@ public class GameManager : MonoBehaviour
     {
         state = s;
     }
+    public void PauseGame()
+    {
+        if (state != State.Paused)
+        {
+            _oldState = state;
+            UpdateState(State.Paused);
+            Time.timeScale = 0;
+        }
+
+    }
+    public void ResumeGame()
+    {
+        UpdateState(_oldState);
+        if (_oldState == State.Paused) UpdateState(State.Playing);
+        Time.timeScale = 1;
+    }
     public void PauseGame(float time)
     {
-        StartCoroutine(DoPauseGame(time));
+        if (state != State.Paused) StartCoroutine(DoPauseGame(time));
     }
     IEnumerator DoPauseGame(float time)
     {
-        State oldState = state;
+
+        _oldState = state;
         UpdateState(State.Paused);
         Time.timeScale = 0;
         yield return new WaitForSecondsRealtime(time);
         Time.timeScale = 1;
-        UpdateState(oldState);
+        UpdateState(_oldState);
     }
 
     public enum State

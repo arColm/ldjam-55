@@ -25,9 +25,17 @@ public class Player : MonoBehaviour
         }
 
     }
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            Die();
+        }
+    }
 
     public void Die()
     {
+        controller.ResetVelocity();
         controller.transform.position = RespawnPoint;
         flute.ResetRats();
     }

@@ -272,6 +272,10 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
         }
     }
+    public void ResetVelocity()
+    {
+        _velocity = Vector2.zero;
+    }
     private void Jump()
     {
 

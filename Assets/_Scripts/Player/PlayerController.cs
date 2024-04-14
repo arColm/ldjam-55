@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     private int _remainingJumps = 1;
     private float _jumpPressedTimer = 0f;
 
-    private bool _inAntiGravity = false;
+    public bool _inAntiGravity { private set; get; } = false;
 
 
     private Controller2D _controller;

@@ -5572,7 +5572,7 @@ MonoBehaviour:
   _packRatScroll: {fileID: 1994038146}
   _resetRatScroll: {fileID: 378372369}
   _bulletRatScroll: {fileID: 1166034457}
-  _antiGravityRatScroll: {fileID: 0}
+  _antiGravityRatScroll: {fileID: 334227042}
 --- !u!1 &182181067
 GameObject:
   m_ObjectHideFlags: 3

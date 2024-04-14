@@ -210,8 +210,10 @@ public class PlayerFlute : MonoBehaviour
     {
         if (_numDroppedRats < maxNumRats)
         {
+            PlayerController controller = Player.Inst.controller;
+            bool shootRight = (controller._isFacingRight && !controller._inAntiGravity) || (!controller._isFacingRight && controller._inAntiGravity);
             Vector2 spawnPos = transform.position;
-            if (Player.Inst.controller._isFacingRight)
+            if (shootRight)
             {
                 spawnPos = new Vector2(spawnPos.x + 1, spawnPos.y);
             }
@@ -221,7 +223,7 @@ public class PlayerFlute : MonoBehaviour
             }
             CreateSpawnRatParticles(spawnPos);
             BulletRat rat = Instantiate(_bulletRat, spawnPos, Quaternion.identity);
-            rat.Instantiate(Player.Inst.controller._isFacingRight);
+            rat.Instantiate(shootRight);
             _droppedRats[_numDroppedRats] = rat;
             _numDroppedRats++;
             UpdateRemainingRats?.Invoke(maxNumRats - _numDroppedRats);

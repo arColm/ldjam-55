@@ -186,29 +186,45 @@ public class PlayerFlute : MonoBehaviour
     {
         if (_keyList[3] == 'u' && _keyList[2] == 'i' && _keyList[1] == 'o' && _keyList[0] == 'p')
         {
-            ResetRats();
-            CreateResetRatParticles(transform.position);
-            //UI.Inst.EnableResetRatScroll();
-            ResetKeyList();
+            if(Player.Inst.ResetRatsFound)
+            {
+                ResetRats();
+                CreateResetRatParticles(transform.position);
+                //UI.Inst.EnableResetRatScroll();
+                ResetKeyList();
+            }
+
         }
         if (_keyList[3] == 'u' && _keyList[2] == 'i' && _keyList[1] == 'u' && _keyList[0] == 'i')
         {
-            SpawnPackRats();
-            //UI.Inst.EnablePackRatScroll();
+            if(Player.Inst.PackRatsFound)
+            {
+                SpawnPackRats();
+                //UI.Inst.EnablePackRatScroll();
 
-            ResetKeyList();
+                ResetKeyList();
+            }
+
         }
         if (_keyList[3] == 'o' && _keyList[2] == 'i' && _keyList[1] == 'u' && _keyList[0] == 'i')
         {
-            SpawnBulletRat();
-            //UI.Inst.EnableBulletRatScroll();
-            ResetKeyList();
+            if(Player.Inst.BulletRatsFound)
+            {
+                SpawnBulletRat();
+                //UI.Inst.EnableBulletRatScroll();
+                ResetKeyList();
+            }
+
         }
         if (_keyList[3] == 'p' && _keyList[2] == 'o' && _keyList[1] == 'i' && _keyList[0] == 'u')
         {
-            SpawnAntiGravityRat();
-            //UI.Inst.EnableAntiGravityRatScroll();
-            ResetKeyList();
+            if(Player.Inst.AntiGravityRatFound)
+            {
+                SpawnAntiGravityRat();
+                //UI.Inst.EnableAntiGravityRatScroll();
+                ResetKeyList();
+            }
+
         }
     }
     private void SpawnBulletRat()

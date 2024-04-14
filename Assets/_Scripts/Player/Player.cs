@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static event Action Death;
     public Vector2 RespawnPoint;
 
     public PlayerController controller;
@@ -38,5 +40,6 @@ public class Player : MonoBehaviour
         controller.ResetVelocity();
         controller.transform.position = RespawnPoint;
         flute.ResetRats();
+        Death?.Invoke();
     }
 }

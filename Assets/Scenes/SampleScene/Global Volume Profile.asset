@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6107604623671529950
+--- !u!114 &-3928004361623021193
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,38 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b2db86121404754db890f4c8dfe81b2, type: 3}
-  m_Name: Bloom
+  m_Script: {fileID: 11500000, guid: 29fa0085f50d5e54f8144f766051a691, type: 3}
+  m_Name: FilmGrain
   m_EditorClassIdentifier: 
   active: 1
-  threshold:
+  type:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 2
   intensity:
     m_OverrideState: 1
-    m_Value: 0
-  scatter:
+    m_Value: 0.789
+  response:
     m_OverrideState: 1
-    m_Value: 0.7
-  clamp:
-    m_OverrideState: 0
-    m_Value: 65472
-  tint:
-    m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
-  highQualityFiltering:
-    m_OverrideState: 0
-    m_Value: 0
-  skipIterations:
-    m_OverrideState: 0
     m_Value: 1
-  dirtTexture:
+  texture:
     m_OverrideState: 0
     m_Value: {fileID: 0}
-    dimension: 1
-  dirtIntensity:
-    m_OverrideState: 0
-    m_Value: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55,9 +39,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   components:
   - {fileID: 317960821801754230}
-  - {fileID: -6107604623671529950}
   - {fileID: 4688879206688219121}
   - {fileID: 3646449182272768242}
+  - {fileID: -3928004361623021193}
 --- !u!114 &317960821801754230
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -79,7 +63,7 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.068
+    m_Value: 0.1
   smoothness:
     m_OverrideState: 1
     m_Value: 1
@@ -120,4 +104,4 @@ MonoBehaviour:
     m_Value: 0.092
   cropToFit:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0

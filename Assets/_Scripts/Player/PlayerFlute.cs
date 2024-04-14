@@ -238,11 +238,11 @@ public class PlayerFlute : MonoBehaviour
             Vector2 spawnPos = transform.position;
             if (shootRight)
             {
-                spawnPos = new Vector2(spawnPos.x + 1, spawnPos.y);
+                spawnPos = new Vector2(spawnPos.x - 1, spawnPos.y);
             }
             else
             {
-                spawnPos = new Vector2(spawnPos.x - 1, spawnPos.y);
+                spawnPos = new Vector2(spawnPos.x + 1, spawnPos.y);
             }
             CreateSpawnRatParticles(spawnPos);
             BulletRat rat = Instantiate(_bulletRat, spawnPos, Quaternion.identity);

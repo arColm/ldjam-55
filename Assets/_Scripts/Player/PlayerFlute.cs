@@ -26,6 +26,7 @@ public class PlayerFlute : MonoBehaviour
     [SerializeField] private BulletRat _bulletRat;
     [SerializeField] private Rat _antiGravityRat;
 
+    [SerializeField] private LayerMask _groundLayer;
 
 
     private Rat[] _droppedRats;
@@ -272,16 +273,53 @@ public class PlayerFlute : MonoBehaviour
 
     private void SpawnPackRats()
     {
-        if(_numDroppedRats<maxNumRats)
+        if (_numDroppedRats < maxNumRats)
         {
             Vector2 spawnPos = transform.position;
-            if (Player.Inst.controller._isFacingRight)
+            if ((Player.Inst.controller._isFacingRight && !Player.Inst.controller._inAntiGravity) ||
+                (!Player.Inst.controller._isFacingRight && Player.Inst.controller._inAntiGravity))
             {
-                spawnPos = new Vector2(spawnPos.x + 2, spawnPos.y+1);
+                spawnPos = new Vector2(spawnPos.x + 2, spawnPos.y);
             }
             else
             {
-                spawnPos = new Vector2(spawnPos.x - 2, spawnPos.y+1);
+                spawnPos = new Vector2(spawnPos.x - 2, spawnPos.y);
+            }
+
+            if(Player.Inst.controller._inAntiGravity)
+            {
+                spawnPos = new Vector2(spawnPos.x, spawnPos.y - 1);
+            }
+            else
+            {
+                spawnPos = new Vector2(spawnPos.x, spawnPos.y + 1);
+            }
+
+            Vector3 direction = (Vector3)spawnPos - transform.position;
+
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, direction.magnitude, _groundLayer);
+
+            if(hit)
+            {
+                spawnPos = hit.point;
+                if((Player.Inst.controller._isFacingRight && !Player.Inst.controller._inAntiGravity) ||
+                    (!Player.Inst.controller._isFacingRight && Player.Inst.controller._inAntiGravity))
+                {
+                    spawnPos = new Vector2(spawnPos.x - 1, spawnPos.y);
+                }
+                else
+                {
+                    spawnPos = new Vector2(spawnPos.x + 1, spawnPos.y);
+                }
+
+                if (Player.Inst.controller._inAntiGravity)
+                {
+                    spawnPos = new Vector2(spawnPos.x, spawnPos.y - 0.3f);
+                }
+                else
+                {
+                    spawnPos = new Vector2(spawnPos.x, spawnPos.y + 0.3f);
+                }
             }
 
             CreateSpawnRatParticles(spawnPos);

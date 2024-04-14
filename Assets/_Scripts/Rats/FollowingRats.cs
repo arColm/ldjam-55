@@ -11,14 +11,23 @@ public class FollowingRats : MonoBehaviour
     private void Awake()
     {
         PlayerFlute.UpdateRemainingRats += DoUpdateRemainingRats;
+        Player.Death += TeleportRats;
     }
 
     private void OnDestroy()
     {
         PlayerFlute.UpdateRemainingRats -= DoUpdateRemainingRats;
+        Player.Death -= TeleportRats;
     }
 
-
+    private void TeleportRats()
+    {
+        foreach(FollowingRat rat in _rats)
+        {
+            rat.Clear();
+            rat.transform.position = Player.Inst.controller.transform.position;
+        }
+    }
     private void DoUpdateRemainingRats(int rats)
     {
         if (_rats.Length < rats) return;

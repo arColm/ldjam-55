@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static event Action<bool> EnterAntiGravity;
     [Header("Movement")]
     [SerializeField] private float _moveSpeed = 6;
     [SerializeField] private float _decelerationRateAirborne = 50;
@@ -261,6 +263,7 @@ public class PlayerController : MonoBehaviour
         if(_inAntiGravity!=inAntiGravity)
         {
             _velocity = new Vector2(-_velocity.x, -_velocity.y/2);
+            EnterAntiGravity?.Invoke(inAntiGravity);
         }
         _inAntiGravity = inAntiGravity;
         if(inAntiGravity)

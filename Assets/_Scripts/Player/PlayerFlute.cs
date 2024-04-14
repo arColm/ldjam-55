@@ -11,6 +11,7 @@ public class PlayerFlute : MonoBehaviour
     [SerializeField] private ParticleSystem _musicNoteParticles;
     //events
     public static event Action<int> UpdateRemainingRats;
+    public static event Action PlayNote;
 
     //Rats
 
@@ -64,24 +65,28 @@ public class PlayerFlute : MonoBehaviour
                 AddNewNode('u');
                 _audioSource.PlayOneShot(_uSound);
                 CreateMusicNoteParticle('u', transform.position);
+                PlayNote?.Invoke();
             }
             if (Input.GetKeyDown(KeyCode.I))
             {
                 AddNewNode('i');
                 _audioSource.PlayOneShot(_iSound);
                 CreateMusicNoteParticle('i', transform.position);
+                PlayNote?.Invoke();
             }
             if (Input.GetKeyDown(KeyCode.O))
             {
                 AddNewNode('o');
                 _audioSource.PlayOneShot(_oSound);
                 CreateMusicNoteParticle('o', transform.position);
+                PlayNote?.Invoke();
             }
             if (Input.GetKeyDown(KeyCode.P))
             {
                 AddNewNode('p');
                 _audioSource.PlayOneShot(_pSound);
                 CreateMusicNoteParticle('p', transform.position);
+                PlayNote?.Invoke();
             }
             if (_timeSinceLastKey < _timeToResetKeys)
             {

@@ -12,6 +12,7 @@ public class PlayerFlute : MonoBehaviour
     //events
     public static event Action<int> UpdateRemainingRats;
     public static event Action PlayNote;
+    public static event Action ResetRatsEvent;
 
     //Rats
 
@@ -252,7 +253,6 @@ public class PlayerFlute : MonoBehaviour
     }
     public void ResetRats()
     {
-        print("RESET RATS");
 
         for(int i=0;i<_numDroppedRats;i++)
         {
@@ -265,6 +265,7 @@ public class PlayerFlute : MonoBehaviour
         }
 
         _numDroppedRats = 0;
+        ResetRatsEvent?.Invoke();
         UpdateRemainingRats?.Invoke(maxNumRats - _numDroppedRats);
 
     }

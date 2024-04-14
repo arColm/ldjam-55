@@ -67,4 +67,11 @@ public class Player : MonoBehaviour
 
         _deathParticles.Emit(emitParams,15);
     }
+    public void EmitDeathParticles(Vector2 position,int count)
+    {
+        EmitParams emitParams = new EmitParams();
+        emitParams.position = position;
+
+        _deathParticles.Emit(emitParams, count);
+    }
 }

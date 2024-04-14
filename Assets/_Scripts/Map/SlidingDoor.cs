@@ -12,7 +12,6 @@ public class SlidingDoor : MonoBehaviour,IActivatable
 
     public void Activate()
     {
-        print("OPEN");
         if(_currentCoroutine!=null)
         {
             StopCoroutine(_currentCoroutine);
@@ -41,7 +40,6 @@ public class SlidingDoor : MonoBehaviour,IActivatable
 
     public void Deactivate()
     {
-        print("CLOSE");
         if (_currentCoroutine != null)
         {
             StopCoroutine(_currentCoroutine);

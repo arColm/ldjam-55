@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     public bool PackRatsFound = false;
     public bool ResetRatsFound = false;
     public bool BulletRatsFound = false;
+    public bool AntiGravityRatFound = false;
 
     [SerializeField] private ParticleSystem _deathParticles;
     private void Awake()
@@ -59,7 +60,7 @@ public class Player : MonoBehaviour
         flute.ResetRats();
         Death?.Invoke();
     }
-    private void EmitDeathParticles()
+    public void EmitDeathParticles()
     {
         EmitParams emitParams = new EmitParams();
         emitParams.position = controller.transform.position;

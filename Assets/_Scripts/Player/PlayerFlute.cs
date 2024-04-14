@@ -188,26 +188,26 @@ public class PlayerFlute : MonoBehaviour
         {
             ResetRats();
             CreateResetRatParticles(transform.position);
-            UI.Inst.EnableResetRatScroll();
+            //UI.Inst.EnableResetRatScroll();
             ResetKeyList();
         }
         if (_keyList[3] == 'u' && _keyList[2] == 'i' && _keyList[1] == 'u' && _keyList[0] == 'i')
         {
             SpawnPackRats();
-            UI.Inst.EnablePackRatScroll();
+            //UI.Inst.EnablePackRatScroll();
 
             ResetKeyList();
         }
         if (_keyList[3] == 'o' && _keyList[2] == 'i' && _keyList[1] == 'u' && _keyList[0] == 'i')
         {
             SpawnBulletRat();
-            UI.Inst.EnableBulletRatScroll();
+            //UI.Inst.EnableBulletRatScroll();
             ResetKeyList();
         }
         if (_keyList[3] == 'p' && _keyList[2] == 'o' && _keyList[1] == 'i' && _keyList[0] == 'u')
         {
             SpawnAntiGravityRat();
-            UI.Inst.EnableAntiGravityRatScroll();
+            //UI.Inst.EnableAntiGravityRatScroll();
             ResetKeyList();
         }
     }

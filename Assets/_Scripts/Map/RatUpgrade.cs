@@ -10,6 +10,7 @@ public class RatUpgrade : MonoBehaviour
         if (collision.CompareTag(Player.Inst.tag))
         {
             Player.Inst.flute.UpgradeRats();
+            Player.Inst.EmitDeathParticles();
             Destroy(gameObject);
         }
     }

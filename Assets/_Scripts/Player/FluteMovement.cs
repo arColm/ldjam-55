@@ -26,7 +26,7 @@ public class FluteMovement : MonoBehaviour
         {
             case PlayerController.State.Idle:
                 targetPosition = new Vector2(0.25f, -0.25f);
-                targetRotation = Quaternion.Euler(new Vector3(0, 0, 35f));
+                targetRotation = Quaternion.Euler(new Vector3(0, 0, -35f));
                 break;
             case PlayerController.State.Walking:
                 targetPosition = new Vector2(0f, -0.25f);
@@ -45,6 +45,6 @@ public class FluteMovement : MonoBehaviour
         }
 
         transform.localPosition = Vector2.MoveTowards(transform.localPosition, targetPosition, Time.fixedDeltaTime);
-        transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetRotation, Time.fixedDeltaTime*20);
+        transform.localRotation = Quaternion.RotateTowards(transform.localRotation, targetRotation, Time.fixedDeltaTime*50);
     }
 }

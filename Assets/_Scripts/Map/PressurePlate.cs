@@ -13,6 +13,8 @@ public class PressurePlate : MonoBehaviour
     [SerializeField] private Sprite _activatedSprite;
     [SerializeField] private Sprite _deactivatedSprite;
 
+    private int _weight=0;
+
 
     private void Awake()
     {
@@ -29,6 +31,7 @@ public class PressurePlate : MonoBehaviour
     {
         if(collision.CompareTag(Player.Inst.tag) || collision.CompareTag("PackRat"))
         {
+            _weight++;
             foreach(IActivatable activatable in activatables)
             {
                 activatable.Activate();
@@ -41,11 +44,17 @@ public class PressurePlate : MonoBehaviour
     {
         if (collision.CompareTag(Player.Inst.tag) || collision.CompareTag("PackRat"))
         {
-            foreach (IActivatable activatable in activatables)
+            _weight--;
+            if(_weight==0)
             {
-                activatable.Deactivate();
+                foreach (IActivatable activatable in activatables)
+                {
+                    activatable.Deactivate();
+                }
+                _spriteRenderer.sprite = _deactivatedSprite;
+
             }
-            _spriteRenderer.sprite = _deactivatedSprite;
+
         }
     }
 }

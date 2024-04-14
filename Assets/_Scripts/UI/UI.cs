@@ -37,6 +37,22 @@ public class UI : MonoBehaviour
     private void TogglePauseMenu()
     {
         _pauseMenu.SetActive(!_pauseMenu.activeInHierarchy);
+        if(Player.Inst.PackRatsFound)
+        {
+            EnablePackRatScroll();
+        }
+        if(Player.Inst.ResetRatsFound)
+        {
+            EnableResetRatScroll();
+        }
+        if(Player.Inst.BulletRatsFound)
+        {
+            EnableBulletRatScroll();
+        }
+        if(Player.Inst.AntiGravityRatFound)
+        {
+            EnableAntiGravityRatScroll();
+        }
         if (_pauseMenu.activeSelf) GameManager.Inst.PauseGame();
         else GameManager.Inst.ResumeGame();
         
